@@ -3,6 +3,10 @@ let hasCalculated = false;
 
 function appendCharacter(character) {
   if (hasCalculated && !isOperator(character)) {
+    currentInput = "";
+    hasCalculated = false;
+  }
+  if (hasCalculated && isOperator(character)) {
     currentInput = currentInput.split('=')[1] || currentInput;
     hasCalculated = false;
   }
@@ -14,7 +18,7 @@ function calculate() {
   if (currentInput !== "") {
     try {
       const result = eval(currentInput);
-      currentInput = `${result}`;
+      currentInput = `=${result}`;
       hasCalculated = true;
       updateDisplay();
     } catch (error) {
@@ -32,7 +36,11 @@ function clearDisplay() {
 }
 
 function updateDisplay() {
-  document.getElementById("output").value = currentInput;
+  document.getElementById("output").value = hasCalculated ? currentInput : formatInput(currentInput);
+}
+
+function formatInput(input) {
+  return input.replace(/(\d+)\s*([+\-*/])\s*(?=\d)/g, "$1 $2 ");
 }
 
 function isOperator(character) {
