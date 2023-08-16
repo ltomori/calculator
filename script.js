@@ -2,7 +2,7 @@ let currentInput = "";
 let hasCalculated = false;
 
 function appendCharacter(character) {
-  if (hasCalculated) {
+  if (hasCalculated && !isOperator(character)) {
     currentInput = "";
     hasCalculated = false;
   }
@@ -33,4 +33,9 @@ function clearDisplay() {
 
 function updateDisplay() {
   document.getElementById("output").value = currentInput;
+}
+
+function isOperator(character) {
+  const operators = ["+", "-", "*", "/"];
+  return operators.includes(character);
 }
