@@ -3,7 +3,7 @@ let hasCalculated = false;
 
 function appendCharacter(character) {
   if (hasCalculated && !isOperator(character)) {
-    currentInput = "";
+    currentInput = currentInput.slice(currentInput.indexOf('=') + 1);
     hasCalculated = false;
   }
   currentInput += character;
@@ -14,7 +14,7 @@ function calculate() {
   if (currentInput !== "") {
     try {
       const result = eval(currentInput);
-      currentInput = result.toString();
+      currentInput = `${currentInput}=${result}`;
       hasCalculated = true;
       updateDisplay();
     } catch (error) {
